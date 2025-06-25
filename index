@@ -1,25 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Welcome Header</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Fetch user information
-            fetch("/_api/web/currentUser", {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json; odata=verbose"
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                const userName = data.d.Title; // Get the user's name
-                document.getElementById("welcomeMessage").innerText = "Welcome, " + userName + "!";
-            });
-        });
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Helvetica Neue', sans-serif;
+            text-align: left;
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
     <h1 id="welcomeMessage">Welcome!</h1>
+
+    <script>
+        // Function to get query parameters from the URL
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Get the user's name from the URL
+        const userName = getQueryParameter('name');
+        const welcomeMessage = document.getElementById("welcomeMessage");
+
+        if (userName) {
+            welcomeMessage.innerText = "Welcome, " + decodeURIComponent(userName) + "!";
+        }
+    </script>
 </body>
 </html>
